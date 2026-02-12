@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meteo mio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>⛅️ Il mio meteo</h1>
+        
+        <div class="ricerca">
+            <input type="text" id="citta" placeholder="Inserisci una città" value="Roma">
+            <button id="cerca">Cerca</button>
+        </div>
+
+        <div id="meteo">
+            <h2 id="nome-citta">Roma</h2>
+            <div id="temperatura">--°C</div>
+            <div id="descrizione">--</div>
+            <div id="dettagli">
+                <span>💧 Umidità: --%</span>
+                <span>💨 Vento: -- km/h</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
