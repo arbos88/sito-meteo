@@ -37,7 +37,7 @@ async function cercaMeteo(citta) {
         const lon = geoData.results[0].longitude;
         const nome = geoData.results[0].name;
         
-        const meteoRes = await fetch(apiBase + '?latitude=' + lat + '&longitude=' + lon + '&current_weather=true&hourly=relativehumidity_2m&timezone=auto');
+        const meteoRes = await fetch(apiBase + '?latitude=' + lat + '&longitude=' + lon + '&current_weather=true&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=auto');
         const meteoData = await meteoRes.json();
         
         document.getElementById('nome-citta').textContent = nome;
@@ -50,7 +50,31 @@ async function cercaMeteo(citta) {
         }
         
         document.getElementById('dettagli').innerHTML = '<span>💧 Umidità: ' + umidita + '%</span> <span>💨 Vento: ' + meteoData.current_weather.windspeed + ' km/h</span>';
+        // Previsioni 5 giorni
+if (meteoData.daily) {
+    let htmlGiorni = '';
+    const giorni = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
+    
+    for (let i = 0; i < 5; i++) {
+        const data = new Date(meteoData.daily.time[i]);
+        const nomeGiorno = giorni[data.getDay()];
+        const max = Math.round(meteoData.daily.temperature_2m_max[i]);
+        const min = Math.round(meteoData.daily.temperature_2m_min[i]);
+        const codice = meteoData.daily.weathercode[i];
+        const icona = descriviMeteo(codice).split(' ')[0]; // Prende solo l'emoji
         
+        htmlGiorni += `
+            <div style="background: rgba(255,255,255,0.1); padding: 12px; border-radius: 12px; flex: 1; text-align: center; min-width: 70px;">
+                <div style="font-weight: bold; margin-bottom: 8px;">${nomeGiorno}</div>
+                <div style="font-size: 24px; margin-bottom: 8px;">${icona}</div>
+                <div style="font-size: 18px;">${max}°</div>
+                <div style="font-size: 14px; opacity: 0.9;">${min}°</div>
+            </div>
+        `;
+    }
+    
+    document.getElementById('giorni-container').innerHTML = htmlGiorni;
+}
     } catch (error) {
         console.error('Errore:', error);
         alert('Errore nel caricamento dei meteo. Riprova.');
