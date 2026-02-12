@@ -18,7 +18,7 @@ document.getElementById('citta').addEventListener('keypress', function(e) {
 });
 
 window.addEventListener('load', function() {
-    cercaMeteo('Roma');
+    cercaMeteo('Camastra');
 });
 
 async function cercaMeteo(citta) {
@@ -93,3 +93,4 @@ function descriviMeteo(codice) {
     if (codice === 95) return '⛈️ Temporale';
     return '🌡️ Altro';
 }
+
